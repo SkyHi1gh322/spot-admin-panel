@@ -1,0 +1,42 @@
+@import '../../../variables'
+
+.baseSelect
+  height: 36px
+  position: relative
+  &__value
+    color: $neutral-90
+    border: 1px solid $color-70
+    outline: 2px solid $color-10
+    border-radius: 4px
+    height: 28px
+    cursor: pointer
+    box-sizing: border-box
+    padding: 2px 6px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    &__placeholder
+      color: $neutral-60
+      font-size: 14px
+    &__content
+      width: 100%
+      &__multi
+        display: flex
+        grid-column-gap: 8px
+        max-width: 40%
+    &__clear
+      cursor: pointer
+  &__list
+    position: absolute
+    background: white
+    box-sizing: border-box
+    width: 100%
+    z-index: 1000
+    box-shadow: 2px 4px 10px rgba(3, 25, 86, 0.08), 0px 4px 20px rgba(3, 25, 86, 0.12)
+    &__option
+      padding: 8px 4px
+      cursor: pointer
+      &:hover
+        background: $color-0
+    &__selectedOption
+      background: $color-10

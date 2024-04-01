@@ -1,0 +1,52 @@
+@import '../../variables'
+
+.assets
+  &__list
+    margin-top: 20px
+    padding: 0 10px
+  &__info
+    padding: 40px 20px
+    box-sizing: border-box
+    background: white
+    display: flex
+    grid-column-gap: 20px
+    border-bottom: 1px solid $neutral-30
+    &__detail
+      padding: 0 10px
+      padding-right: 20px
+      border-right: 1px solid $neutral-30
+      grid-row-gap: 6px
+      display: flex
+      flex-direction: column
+      &__title
+      &__item
+        display: flex
+        align-items: center
+        div
+          display: flex
+          align-items: center
+          grid-column-gap: 4px
+        &__label
+          color: $neutral-70
+        &__value
+          margin-left: 4px
+  &__balance
+    display: flex
+    align-items: center
+    justify-content: center
+    margin: 20px 0
+    height: 140px
+    width: 350px
+  &__filtersPanel
+    border-bottom: 1px solid $neutral-30
+    padding: 8px
+    box-sizing: border-box
+    background: white
+    display: flex
+    grid-column-gap: 12px
+    width: 100%
+    &__action
+      display: flex
+      cursor: pointer
+      grid-column-gap: 4px
+      align-items: center
