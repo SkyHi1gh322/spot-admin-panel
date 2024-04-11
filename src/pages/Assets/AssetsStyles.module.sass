@@ -2,22 +2,28 @@
 
 .assets
   &__list
-    margin-top: 20px
-    padding: 0 10px
+    display: flex
+    flex-direction: column
   &__info
     padding: 40px 20px
     box-sizing: border-box
     background: white
     display: flex
     grid-column-gap: 20px
-    border-bottom: 1px solid $neutral-30
+    border-bottom: 1px solid $neutral-20
+    :last-child
+      border-right: none !important
     &__detail
       padding: 0 10px
       padding-right: 20px
-      border-right: 1px solid $neutral-30
-      grid-row-gap: 6px
+      border-right: 1px solid $neutral-20
+      grid-row-gap: 12px
       display: flex
       flex-direction: column
+      a
+        color: $link
+        &:hover
+          color: $link-hover !important
       &__title
       &__item
         display: flex
@@ -27,9 +33,10 @@
           align-items: center
           grid-column-gap: 4px
         &__label
-          color: $neutral-70
+          color: $neutral-50
         &__value
           margin-left: 4px
+          color: $neutral-70
   &__balance
     display: flex
     align-items: center
@@ -39,14 +46,22 @@
     width: 350px
   &__filtersPanel
     border-bottom: 1px solid $neutral-30
-    padding: 8px
+    padding: 16px 32px
+    height: 70px
     box-sizing: border-box
     background: white
-    display: flex
-    grid-column-gap: 12px
     width: 100%
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &__actions, &__actionsWhenSelected
+      display: flex
+      grid-column-gap: 24px
+      align-items: center
     &__action
       display: flex
       cursor: pointer
       grid-column-gap: 4px
       align-items: center
+      p
+        font-size: 16px

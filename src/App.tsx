@@ -2,12 +2,16 @@ import React from 'react';
 import './reset.css';
 import {ProtectedPage} from "./pages/Protected";
 import {BrowserRouter} from "react-router-dom";
+import {createAssetDrawerCall} from "./pages/Assets/root";
+import ModalProvider from "./wrappers/modal/ModalProvider";
 
 function App() {
   return (
     <div className="App">
         <BrowserRouter>
-            <ProtectedPage/>
+            <ModalProvider>
+                <ProtectedPage/>
+            </ModalProvider>
         </BrowserRouter>
     </div>
   );

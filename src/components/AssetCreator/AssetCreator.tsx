@@ -1,82 +1,94 @@
 import * as React from 'react';
-import {FC, useState} from "react";
+import {FC} from "react";
 import {Input} from "../utils/input/Input";
 import {Button} from "../utils/button/Button";
 import {Select} from "../utils/select/Select";
 import styles from './AssetsCreator.module.sass';
-import {AssetI} from "../../pages/Assets/types";
-import {useSetState} from "react-use";
-interface Props{
-    setAssets:  React.Dispatch<React.SetStateAction<AssetI[]>>
-}
+import {useValidate} from "../../validation";
+import {CreateAssetSchema, echangeList, tagList} from "./data";
+import {FormItem} from "../utils/formItem/FormItem";
+import {useDispatch} from "react-redux";
+import {addAssetReducer} from "../../redux/assets/assetsSlice";
+import {BaseBuilderCloseFn, BuilderFullProps} from "../../generalTypes";
 
-export const AssetCreator: FC<Props> = (props) => {
-    const echangeList = [
-        {name: 'Binance', id: 0,},
-        {name: 'KuCoin', id: 1},
-        {name: 'BitGet', id: 2},
-        {name: 'BingX', id: 3}
-    ]
 
-    const tagList = [{
-        name: 'Долгосрок',
-    }, {name: 'MeMe'}, {name: 'Fast Money'}, {name: 'Prob scam'}];
 
-    const [asset, setAsset] = useSetState<AssetI>({assetAmount: 0, exchange: "", name: "", tags: [], usdAmount: 0});
+export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
+    const dispatch = useDispatch();
+    const {fields, onChange, onSubmit, isValidForm, getBaseDto, onRefreshForm} = useValidate(CreateAssetSchema);
 
-    const onCreate = () => {
-        props.setAssets((prev) => [...prev, asset]);
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        onSubmit(e, () => {
+            if(isValidForm()){
+                dispatch(addAssetReducer(getBaseDto()));
+                onRefreshForm();
+                props.onClose();
+            }
+        })
     }
 
     return (
         <div className={styles.assetCreator}>
-           <form>
-               <div className={styles.assetCreator__block}>
-                   <Input placeholder={'Введите название токена'}
-                          onChange={(e) => setAsset({name: e.target.value})}
-                          className={styles.assetCreator__block__field}/>
-                   <Input placeholder={'Введите сумму покупки'}
-                          className={styles.assetCreator__block__field}
-                          type={"number"}
-                          min={1}
-                          onChange={(e) => setAsset({usdAmount: +e.target.value}) }
-                   />
+           <form onSubmit={submit}>
+               <div className={styles.assetCreator__selectors}>
+                       <FormItem errors={fields.name.errors} label={'Имя токена'} isRequired>
+                           <Input placeholder={'Введите название токена'}
+                                  error={fields.name.hasErrors}
+                                  value={fields.name.value}
+                                  onChange={(e) => onChange({name: e.target.value})}
+                                  className={styles.assetCreator__block__field}/>
+                       </FormItem>
+                       <FormItem errors={fields.usdAmount.errors} label={'Сумма в USD'} isRequired>
+                           <Input placeholder={'Введите сумму покупки'}
+                                  className={styles.assetCreator__block__field}
+                                  type={"number"}
+                                  min={1}
+                                  value={fields.usdAmount.value}
+                                  error={fields.usdAmount.hasErrors}
+                                  onChange={(e) => onChange({usdAmount: +e.target.value}) }
+                           />
+                       </FormItem>
+                       <FormItem errors={fields.assetAmount.errors} label={'Количество токенов'} isRequired>
+                           <Input className={styles.assetCreator__block__field}
+                                  placeholder={'Введите количество токенов'}
+                                  type={"number"}
+                                  value={fields.assetAmount.value}
+                                  error={fields.assetAmount.hasErrors}
+                                  onChange={(e) => onChange({assetAmount: +e.target.value})}
+                                  min={0}/>
+                       </FormItem>
+                       <FormItem label={'Название биржи'}>
+                           <Select list={echangeList}
+                                   value={fields.exchange.value}
+                                   className={styles.assetCreator__block__field}
+                                   placeholder={'Выберите биржу'}
+                                   onClear={() => onChange({exchange: ""})}
+                                   mapping={{key: 'id', value: 'name'}}
+                                   onSelect={(mapped) => {
+                                       onChange({exchange: mapped.value})
+                                   }}
+                           />
+                       </FormItem>
+                       <FormItem label={'Ассоциативные тэги'} isRequired errors={fields.tags.errors}>
+                           <Select list={tagList}
+                                   className={styles.assetCreator__block__field}
+                                   value={fields.tags.value}
+                                   multiple={true}
+                                   error={fields.tags.hasErrors}
+                                   placeholder={'Выберите тэги'}
+                                   onClear={() => onChange({tags: []})}
+                                   mapping={{key: 'name', value: 'name'}}
+                                   onSelect={(mapped) => {
+                                       onChange({tags: mapped.map(i => i.value)})
+                                   }}
+                           />
+                       </FormItem>
                </div>
-               <div className={styles.assetCreator__block}>
-                   <Input className={styles.assetCreator__block__field}
-                          placeholder={'Введите количество токенов'}
-                          type={"number"}
-                          onChange={(e) => setAsset({assetAmount: +e.target.value})}
-                          min={1}/>
-                   <Select list={echangeList}
-                           value={asset.exchange}
-                           className={styles.assetCreator__block__field}
-                           placeholder={'Выберите биржу'}
-                           onClear={() => setAsset({exchange: ""})}
-                           mapping={{key: 'id', value: 'name'}}
-                           onSelect={(mapped) => {
-                               setAsset({exchange: mapped.value})
-                           }}
-                   />
-               </div>
-               <div className={styles.assetCreator__block}>
-                   <Select list={tagList}
-                           className={styles.assetCreator__block__field}
-                       // @ts-ignore
-                           value={asset}
-                           multiple={true}
-                           placeholder={'Выберите тэги'}
-                           onClear={() => setAsset({tags: []})}
-                           mapping={{key: 'name', value: 'name'}}
-                           onSelect={(mapped) => {
-                               setAsset({tags: mapped.map(i => i.value)})
-                           }}
-                   />
-               </div>
+               <Button color={'main'} variant={'primary'} className={styles.assetCreator__createBtn} type={'submit'}>
+                   Create asset
+               </Button>
            </form>
-            <Button className={styles.assetCreator__createBtn} onClick={onCreate}>
-                Create asset
-            </Button>
         </div>
     )
 }

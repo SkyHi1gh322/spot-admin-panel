@@ -4,13 +4,14 @@ import styles from './SelectStyles.module.sass';
 import {useClickAway} from 'react-use';
 import {Tag} from "../tag/Tag";
 import CloseIcon from 'mdi-react/CloseIcon';
+import {clsx} from 'clsx';
 
 type MappedType<T, A extends Record<string, any>> = {key: keyof T, value: keyof T} & A
 
 type ValueType<T, A extends Record<string, any>> = {
     render: React.ReactNode,
     real: string | number
-} | (string | number) | (MappedType<T, A>[])
+} | (string | number) | string[]
 
 interface BaseProps<T, A extends Record<string, any>>{
     list: T[],
@@ -21,7 +22,9 @@ interface BaseProps<T, A extends Record<string, any>>{
     placeholder?: string,
     allowSearch?: boolean,
     onSearch?: (value: string) => void,
-    className?: string
+    className?: string,
+    disabled?: boolean,
+    error?: boolean
 }
 
 type MultiSelectProps<T, A extends Record<string, any>> = BaseProps<T, A> & {
@@ -54,7 +57,7 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
     const handleVisibleValue = useMemo(() => {
         if(Array.isArray(props.value)){
             return <div className={styles.baseSelect__value__content__multi}>
-                {props.value.map(i => <Tag onClick={() => onSelect(i)} key={i.key as unknown as string | number} text={i.value as unknown as string}/>)}
+                {selected.map(i => <Tag onClick={() => onSelect(i)} key={i.key as unknown as string | number} text={i.value as unknown as string}/>)}
             </div>
         }
         if(typeof props.value === 'object' && !Array.isArray(props.value)){
@@ -140,14 +143,14 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
         return <div className={styles.baseSelect__value__placeholder}>{props.placeholder}</div>
     }, [props.value])
 
-
+    const classNames = clsx(styles.baseSelect__value, open && styles.baseSelect__valueFocus, props.disabled && styles.baseSelect__valueDisabled ,props.className, props.error && styles.baseSelect__valueWithError)
     return (
         <div ref={containerRef} className={styles.baseSelect}>
-            <div className={`${styles.baseSelect__value} ${props.className}`} onClick={() => setOpen(!open)}>
+            <div className={classNames} onClick={() => setOpen(!open)}>
                 {placeholderOrValue}
-                <div className={styles.baseSelect__value__clear} onClick={onClear}>
+                {selected.length ? <div className={styles.baseSelect__value__clear} onClick={onClear}>
                     <CloseIcon/>
-                </div>
+                </div> : null}
             </div>
             {open && <div className={styles.baseSelect__list}>{handleListMapping}</div>}
         </div>

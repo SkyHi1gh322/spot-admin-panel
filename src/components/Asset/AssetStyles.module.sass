@@ -1,14 +1,69 @@
 @import '../../variables'
 
+.assetToRemove
+  border-left: 2px solid $link !important
+
 .asset
   display: flex
-  grid-column-gap: 20px
-  padding: 8px 16px
+  justify-content: space-between
+  align-items: center
   box-sizing: border-box
+  height: 80px
   background: white
   border-radius: 4px
-  align-items: center
+  padding: 8px 16px
+  border: 2px solid transparent
   border-bottom: 1px solid $neutral-30
-  &__tags
+  .actions
     display: flex
-    grid-column-gap: 4px
+    align-items: center
+    grid-column-gap: 8px
+    padding-right: 20px
+    &__edit
+      &:hover
+        path
+          fill: $link-hover
+    &__delete
+      &:hover
+        path
+          fill: $error-20
+  .asset_content
+    display: flex
+    grid-column-gap: 40px
+    width: 70%
+    height: 80px
+    box-sizing: border-box
+    align-items: center
+    &__profit
+      display: flex
+      grid-column-gap: 4px
+      align-items: center
+      &__title
+      &__valueRed
+        color: $error-20
+    &__canvas
+      margin-top: 20px
+      height: 80px !important
+      width: 160px !important
+    &__coin
+      display: flex
+      align-items: center
+      div
+        display: flex
+        align-items: center
+        grid-column-gap: 4px
+        p
+          margin-top: 2px
+    &__exchange
+      display: flex
+      align-items: center
+    &__finances
+      display: flex
+      flex-direction: column
+      grid-row-gap: 6px
+    img
+      width: 42px
+      height: 32px
+    &__tags
+      display: flex
+      grid-column-gap: 4px

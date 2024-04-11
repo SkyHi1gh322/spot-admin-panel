@@ -1,5 +1,29 @@
 @import '../../../variables'
 
+.secondaryMain
+  background: white !important
+  border: 1px solid $color-50 !important
+  color: $neutral-90 !important
+  &:hover
+    background: $color-10 !important
+.primaryMain
+  background: $color-50 !important
+  &:hover
+    background: $color-60 !important
+
+
+.secondaryRed
+  background: white !important
+  border: 1px solid $error-10 !important
+  color: $neutral-90 !important
+  &:hover
+    background: $error-0 !important
+
+.primaryRed
+  background: $error-10 !important
+  &:hover
+    background: $error-20 !important
+
 .baseButton
   padding: 8px
   border-radius: 4px
@@ -12,5 +36,11 @@
   align-items: center
   border: none
   cursor: pointer
+  font-size: 16px
+  &:disabled
+    color: $neutral-90 !important
+    border: 1px solid $neutral-40 !important
+    background: $neutral-20 !important
+    cursor: default !important
   &:hover
     background: $color-60

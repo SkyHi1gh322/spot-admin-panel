@@ -1,16 +1,60 @@
 import * as React from 'react';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {ListRoutes} from "../../routes/routes";
 import {FC} from "react";
 import styles from './SidebarStyles.module.sass';
+import {ReactComponent as AssetIcon} from '../../static/svg/briefcase.svg';
+import {ReactComponent as DashboardIcon} from '../../static/svg/chart-histogram.svg';
+import {ReactComponent as CheckListIcon} from '../../static/svg/budget-alt.svg'
+import {Avatar} from "../utils/avatar/Avatar";
 export const Sidebar: FC = () => {
     return(
         <aside className={styles.sidebar}>
-            <Link className={styles.sidebar__link} to={ListRoutes.ASSETS.LIST.pageName()}>Assets</Link>
-            <Link className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>Dashboard</Link>
-            <Link className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>Check list</Link>
-            <Link className={styles.sidebar__link} to={ListRoutes.FAVOURITE_TRADERS.PAGE.pageName()}>Favourite traders</Link>
-
+            <div className={styles.avatar_wrapper}>
+                <Avatar url={'IT'} username={'Ilya Tormanov'}/>
+            </div>
+            <div className={styles.links}>
+                <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.ASSETS.LIST.pageName()}>
+                    <AssetIcon/>
+                    <p>Assets</p>
+                </NavLink >
+                <NavLink  className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
+                    <DashboardIcon/>
+                    <p>Dashboard</p>
+                </NavLink >
+                <NavLink  className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
+                    <CheckListIcon/>
+                    <p>Check list</p>
+                </NavLink >
+            </div>
+            <div className={styles.favourites}>
+                <div className={styles.favourites__title}>Favourite traders</div>
+                <div className={styles.favourites__list}>
+                    <div className={styles.favourites__list__avatarWrapper}>
+                        <Avatar url={'IT'} className={styles.avatar} username={'Golden Garr'}/>
+                        <div className={styles.todayProfitPlus}>+24%</div>
+                    </div>
+                    <div className={styles.favourites__list__avatarWrapper}>
+                        <Avatar url={'IT'} className={styles.avatar} username={'Ilya Tormanov'}/>
+                        <div className={styles.todayProfitPlus}>+20%</div>
+                    </div>
+                    <div className={styles.favourites__list__avatarWrapper}>
+                        <Avatar url={'IT'} className={styles.avatar} username={'Vasili Pupkin'}/>
+                        <div className={styles.todayProfitPlus}>+13%</div>
+                    </div>
+                    <div className={styles.favourites__list__avatarWrapper}>
+                        <Avatar url={'IT'} className={styles.avatar} username={'Gicha de Karta'}/>
+                        <div className={styles.todayProfitPlus}>+2%</div>
+                    </div>
+                    <div className={styles.favourites__list__avatarWrapper}>
+                        <Avatar url={'IT'} className={styles.avatar} username={'ZXCH12352'}/>
+                        <div className={styles.todayProfitMinus}>-16%</div>
+                    </div>
+                </div>
+                <div className={styles.favourites__showAll}>
+                    Show all ...
+                </div>
+            </div>
         </aside>
     )
 }

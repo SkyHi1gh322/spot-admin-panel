@@ -1,18 +1,94 @@
 @import '../../variables'
 
 .sidebar
-  border-right: 1px solid $neutral-30
+  border-right: 1px solid $neutral-20
   min-height: 100vh
   display: flex
   flex-direction: column
-  background: white
-  grid-row-gap: 8px
-  padding: 10px
+  background: $neutral-10
   box-sizing: border-box
-  width: 10%
+  width: 15%
   align-items: flex-start
-  &__link
-    color: $color-70
+  .avatar_wrapper
+    width: 100%
+    padding: 16px
+    box-sizing: border-box
+    border-bottom: 1px solid $neutral-20
+  .links
+    display: flex
+    flex-direction: column
+    grid-row-gap: 8px
+    padding: 16px 16px 32px 16px
+    width: 100%
+    box-sizing: border-box
+    border-bottom: 1px solid $neutral-20
+  .favourites
+    width: 100%
+    box-sizing: border-box
+    padding: 32px 16px 24px 16px
+    border-bottom: 1px solid $neutral-20
+    &__showAll
+      margin-top: 16px
+      width: 100%
+      text-align: center
+      font-size: 14px
+      color: $neutral-90
+      font-weight: 600
+      cursor: pointer
+    &__title
+      font-size: 12px
+      font-weight: 600
+      color: $neutral-90
+    &__list
+      margin-top: 16px
+      display: flex
+      flex-direction: column
+      grid-row-gap: 16px
+      &__avatarWrapper
+        display: flex
+        grid-column-gap: 6px
+        align-items: center
+        .todayProfitPlus
+          font-size: 12px
+          color: $color-60
+          font-weight: 600
+        .todayProfitMinus
+          font-size: 12px
+          color: $error-20
+          font-weight: 600
+        .avatar
+          div
+            width: 20px
+            height: 20px
+            font-size: 14px
+          strong
+            font-size: 14px
+            font-weight: 400
+  &__linkActive
+    display: flex
+    align-items: center
     text-decoration: none
+    background: $neutral-20
+    padding: 8px
+    box-sizing: border-box
+    border-radius: 6px
+    p
+      color: $neutral-100
+      margin-left: 8px
+  &__link
+    display: flex
+    align-items: center
+    text-decoration: none
+    padding: 8px
+    box-sizing: border-box
+    border-radius: 6px
+    &:hover
+      background: $neutral-20
+      p
+        color: $neutral-100
+
+    p
+      color: $neutral-90
+      margin-left: 8px
     &:hover
       color: $color-90
