@@ -20,6 +20,10 @@ const assetsSlice = createSlice({
         deleteAssetsReducer: (state, action) => {
             console.log(action.payload)
             state.list = state.list.filter(i => action.payload.includes(i))
+        },
+        applyFilters: (state, action) => {
+            // const {minUsd, maxUsd, chainName, creationDateOrder} = action.payload;
+            // const getFromUsdRange = state.list.map()
         }
     }
 })

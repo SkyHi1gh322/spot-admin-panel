@@ -1,0 +1,42 @@
+.dashboard
+  .legendList
+    display: flex
+    max-width: 400px
+    flex-wrap: wrap
+    grid-column-gap: 16px
+  .legendItem
+    display: flex
+    align-items: center
+    grid-column-gap: 4px
+  &__pieBlock
+    &__container
+      position: relative
+      width: max-content
+      display: flex
+      flex-direction: column
+      align-items: center
+      .svg
+        width: 400px !important
+        height: 400px !important
+        path
+          fill: revert-layer !important
+      &__balance
+        position: absolute
+        display: flex
+        flex-direction: column
+        grid-row-gap: 8px
+        top: 47%
+        left: 38%
+        align-items: center
+      &__currentAsset
+        position: absolute
+        display: flex
+        flex-direction: column
+        grid-row-gap: 8px
+        top: 40%
+        left: 43%
+        align-items: center
+
+        img
+          width: 40px
+          height: 32px

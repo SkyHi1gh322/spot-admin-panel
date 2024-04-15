@@ -2,14 +2,15 @@ import {ValidationSchema} from "../../validation";
 import {AssetI} from "../../pages/Assets/types";
 
 export const tagList = [{
-    name: 'Долгосрок',
-}, {name: 'MeMe'}, {name: 'Fast Money'}, {name: 'Prob scam'}];
+    key: 0,
+    value: 'Долгосрок',
+}, {key: 1, value: 'MeMe'}, {key: 2, value: 'Fast Money'}, {key: 3, value: 'Prob scam'}];
 
 export const echangeList = [
-    {name: 'Binance', id: 0,},
-    {name: 'KuCoin', id: 1},
-    {name: 'BitGet', id: 2},
-    {name: 'BingX', id: 3}
+    {key: 0, value: 'Binance', id: 0,},
+    {key: 1, value: 'KuCoin', id: 1},
+    {key: 2, value: 'BitGet', id: 2},
+    {key: 3, value: 'BingX', id: 3}
 ]
 
 

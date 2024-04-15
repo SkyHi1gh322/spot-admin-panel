@@ -1,14 +1,18 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {thunk} from "redux-thunk";
 import AssetsReducer from './assets/assetsSlice'
+import AssetsActionsReducer from './assets/assetsActions'
 import {RootState} from "./types";
-import {useSelector} from "react-redux";
-
+import {
+    useSelector as useReduxSelector,
+    TypedUseSelectorHook,
+} from 'react-redux'
 
 
 export const store = configureStore({
     reducer: {
-        assets: AssetsReducer
+        assets: AssetsReducer,
+        assetsActions: AssetsActionsReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
@@ -19,7 +23,5 @@ export const store = configureStore({
 })
 
 
-export const useCustomSelector = (key: keyof RootState) => {
-    const selector = useSelector((state: RootState) => state[key]);
-    return selector
-}
+
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector

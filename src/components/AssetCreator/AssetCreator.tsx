@@ -10,24 +10,26 @@ import {FormItem} from "../utils/formItem/FormItem";
 import {useDispatch} from "react-redux";
 import {addAssetReducer} from "../../redux/assets/assetsSlice";
 import {BaseBuilderCloseFn, BuilderFullProps} from "../../generalTypes";
+import {setDefaultAction} from "../../redux/assets/assetsActions";
 
 
 
 export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
     const dispatch = useDispatch();
     const {fields, onChange, onSubmit, isValidForm, getBaseDto, onRefreshForm} = useValidate(CreateAssetSchema);
-
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit(e, () => {
-            if(isValidForm()){
-                dispatch(addAssetReducer(getBaseDto()));
-                onRefreshForm();
-                props.onClose();
+        onSubmit(() => {
+            if(isValidForm){
+                console.log(fields)
+                // console.log(fields)
+                // dispatch(addAssetReducer(getBaseDto()));
+                // onRefreshForm();
+                // dispatch(setDefaultAction());
+                // props.onClose();
             }
         })
     }
-
     return (
         <div className={styles.assetCreator}>
            <form onSubmit={submit}>
@@ -43,7 +45,7 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
                            <Input placeholder={'Введите сумму покупки'}
                                   className={styles.assetCreator__block__field}
                                   type={"number"}
-                                  min={1}
+                                  min={0}
                                   value={fields.usdAmount.value}
                                   error={fields.usdAmount.hasErrors}
                                   onChange={(e) => onChange({usdAmount: +e.target.value}) }
@@ -64,7 +66,6 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
                                    className={styles.assetCreator__block__field}
                                    placeholder={'Выберите биржу'}
                                    onClear={() => onChange({exchange: ""})}
-                                   mapping={{key: 'id', value: 'name'}}
                                    onSelect={(mapped) => {
                                        onChange({exchange: mapped.value})
                                    }}
@@ -78,7 +79,6 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
                                    error={fields.tags.hasErrors}
                                    placeholder={'Выберите тэги'}
                                    onClear={() => onChange({tags: []})}
-                                   mapping={{key: 'name', value: 'name'}}
                                    onSelect={(mapped) => {
                                        onChange({tags: mapped.map(i => i.value)})
                                    }}

@@ -1,0 +1,36 @@
+@import '../../variables'
+
+.assets
+  &__info
+    padding: 40px 20px
+    box-sizing: border-box
+    background: white
+    display: flex
+    grid-column-gap: 20px
+    border-bottom: 1px solid $neutral-20
+    :last-child
+      border-right: none !important
+    &__detail
+      padding: 0 10px
+      padding-right: 20px
+      border-right: 1px solid $neutral-20
+      grid-row-gap: 12px
+      display: flex
+      flex-direction: column
+      a
+        color: $link
+        &:hover
+          color: $link-hover !important
+      &__title
+      &__item
+        display: flex
+        align-items: center
+        div
+          display: flex
+          align-items: center
+          grid-column-gap: 4px
+        &__label
+          color: $neutral-50
+        &__value
+          margin-left: 4px
+          color: $neutral-70

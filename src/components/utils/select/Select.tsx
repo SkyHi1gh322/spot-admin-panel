@@ -6,41 +6,46 @@ import {Tag} from "../tag/Tag";
 import CloseIcon from 'mdi-react/CloseIcon';
 import {clsx} from 'clsx';
 
-type MappedType<T, A extends Record<string, any>> = {key: keyof T, value: keyof T} & A
+type BaseMappedType = {key: string | number, value: string}
 
-type ValueType<T, A extends Record<string, any>> = {
+type MappedType<T> = BaseMappedType & Partial<T>
+
+type ValueType = {
     render: React.ReactNode,
     real: string | number
-} | (string | number) | string[]
+} | string | string[] | number | number[] | {
+    render: React.ReactNode,
+    real: string | number
+}[]
 
-interface BaseProps<T, A extends Record<string, any>>{
-    list: T[],
-    value: ValueType<T, A>,
+interface BaseProps<T>{
+    list: MappedType<T>[],
+    value: ValueType,
     onOpen?: () => void,
-    mapping: MappedType<T, A>,
     onClear?: () => void,
     placeholder?: string,
     allowSearch?: boolean,
     onSearch?: (value: string) => void,
     className?: string,
     disabled?: boolean,
-    error?: boolean
+    error?: boolean,
+    optionRender?: (value: MappedType<T>) => React.ReactNode
 }
 
-type MultiSelectProps<T, A extends Record<string, any>> = BaseProps<T, A> & {
+type MultiSelectProps<T> = BaseProps<T> & {
     multiple: true,
-    onSelect: (mapped: MappedType<T, A>[]) => void,
+    onSelect: (mapped: MappedType<T>[]) => void,
 }
 
-type SelectProps<T, A extends Record<string, any>> = BaseProps<T, A> & {
+type SelectProps<T> = BaseProps<T> & {
     multiple?: false,
-    onSelect: (mapped: MappedType<T, A>) => void,
+    onSelect: (mapped: MappedType<T>) => void,
 }
 
-type Props<T, A extends Record<string, any>> = MultiSelectProps<T, A> | SelectProps<T,A>
+type Props<T> = MultiSelectProps<T> | SelectProps<T>
 
-export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
-    const [selected, setSelected] = useState<MappedType<T, A>[]>([]);
+export function Select<T>(props: Props<T>){
+    const [selected, setSelected] = useState<MappedType<T>[]>([]);
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -54,10 +59,10 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
         }
     }, [open]);
 
-    const handleVisibleValue = useMemo(() => {
+    const renderValue = useMemo(() => {
         if(Array.isArray(props.value)){
             return <div className={styles.baseSelect__value__content__multi}>
-                {selected.map(i => <Tag onClick={() => onSelect(i)} key={i.key as unknown as string | number} text={i.value as unknown as string}/>)}
+                {selected.map(i => <Tag onClick={() => onSelect(i)} key={i.key as unknown as string | number} text={i.value}/>)}
             </div>
         }
         if(typeof props.value === 'object' && !Array.isArray(props.value)){
@@ -66,45 +71,26 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
         return props.value;
     },[props.value]);
 
-
-    const handleListMapping = useMemo(() => {
-            const mapped: React.ReactNode[] = [];
-            const map = props.mapping;
-            props.list.forEach(i => {
-                const value = i[map.value];
-                const key = i[map.key];
-                if(value && key !== undefined){
-
-                    const typedLiteral = {
-                        key: key,
-                        value: value
-                    } as unknown as MappedType<T, A>;
-
-                    for(let key in map){
-                       if(!typedLiteral[key]){
-                           // @ts-ignore
-                           typedLiteral[key] = i[map[key as unknown as keyof MappedType<T, A>]]
-                       }
-                    }
-
-                    const v = i[map.value] as unknown as string;
-                    const getSelected = selected.findIndex(i => i.key === key) !== -1;
-                    mapped.push(
-                        <div
-                            className={`${styles.baseSelect__list__option} ${getSelected && styles.baseSelect__list__selectedOption }`}
-                            onClick={() => onSelect(typedLiteral)}
-                            key={key as unknown as string}>{v}</div>
-                    )
+    const renderOptions = useMemo(() => {
+            return props.list.map(i => {
+                const getSelected = selected.findIndex(s => s.key === i.key) !== -1;
+                if(props.optionRender){
+                    return <div
+                        className={`${styles.baseSelect__list__option} ${getSelected && styles.baseSelect__list__selectedOption }`}
+                        onClick={() => onSelect(i)}
+                        key={i.key as unknown as (string | number)}
+                    >
+                        {props.optionRender(i)}
+                    </div>
                 }
-                else{
-                    throw new Error('invalid key-value pair in prop "mapping"')
-                }
+                return <div
+                    className={`${styles.baseSelect__list__option} ${getSelected && styles.baseSelect__list__selectedOption }`}
+                    onClick={() => onSelect(i)}
+                    key={i.key as unknown as (string | number)}>{i.value}</div>
             })
-            return mapped;
-
     },[props, selected])
 
-    const onSelect = (data: MappedType<T, A>) => {
+    const onSelect = (data: MappedType<T>) => {
         if(props.multiple){
             let arr = [...selected];
             if(arr.findIndex(i => i.key === data.key) !== -1){
@@ -113,6 +99,7 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
             else{
                 arr.push(data)
             }
+
             props.onSelect(arr);
             setSelected(arr);
         }
@@ -131,13 +118,13 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
         if(Array.isArray(props.value)){
             if(props.value.length){
                 return    <div className={styles.baseSelect__value__content}>
-                    {handleVisibleValue}
+                    {renderValue}
                 </div>
             }
         }
         else if(props.value){
             return    <div className={styles.baseSelect__value__content}>
-                {handleVisibleValue}
+                {renderValue}
             </div>
         }
         return <div className={styles.baseSelect__value__placeholder}>{props.placeholder}</div>
@@ -152,7 +139,7 @@ export function Select<T, A extends Record<string, any>>(props: Props<T, A>){
                     <CloseIcon/>
                 </div> : null}
             </div>
-            {open && <div className={styles.baseSelect__list}>{handleListMapping}</div>}
+            {open && <div className={styles.baseSelect__list}>{renderOptions}</div>}
         </div>
     )
 

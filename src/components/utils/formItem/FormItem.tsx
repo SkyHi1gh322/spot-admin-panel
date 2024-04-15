@@ -6,7 +6,8 @@ interface Props {
     children: React.ReactNode,
     label: string,
     isRequired?: boolean,
-    errors?: string[]
+    errors?: string[],
+    className?: string
 }
 
 export const FormItem: FC<Props> = (props) => {
@@ -18,7 +19,7 @@ export const FormItem: FC<Props> = (props) => {
                     {props.label}
                 </p>
             </div>
-            <div className={styles.content}>{props.children}</div>
+            <div className={`${styles.content} ${props.className}`}>{props.children}</div>
             <div style={{minHeight: '16px'}}>
                 {props.errors?.map(err =>
                     <p className={styles.error}>{err}</p>

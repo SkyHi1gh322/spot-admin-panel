@@ -4,7 +4,7 @@ import {ListRoutes} from "../../routes/routes";
 import {FC} from "react";
 import styles from './SidebarStyles.module.sass';
 import {ReactComponent as AssetIcon} from '../../static/svg/briefcase.svg';
-import {ReactComponent as DashboardIcon} from '../../static/svg/chart-histogram.svg';
+import {ReactComponent as NewsIcon} from '../../static/svg/newspaper-open.svg';
 import {ReactComponent as CheckListIcon} from '../../static/svg/budget-alt.svg'
 import {Avatar} from "../utils/avatar/Avatar";
 export const Sidebar: FC = () => {
@@ -14,13 +14,13 @@ export const Sidebar: FC = () => {
                 <Avatar url={'IT'} username={'Ilya Tormanov'}/>
             </div>
             <div className={styles.links}>
-                <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.ASSETS.LIST.pageName()}>
+                <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.ASSETS.pageName}>
                     <AssetIcon/>
                     <p>Assets</p>
                 </NavLink >
-                <NavLink  className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
-                    <DashboardIcon/>
-                    <p>Dashboard</p>
+                <NavLink  className={styles.sidebar__link} to={ListRoutes.FAVOURITE_TRADERS.PAGE.pageName()}>
+                    <NewsIcon/>
+                    <p>News</p>
                 </NavLink >
                 <NavLink  className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
                     <CheckListIcon/>

@@ -1,0 +1,45 @@
+@import '../../variables'
+
+.filters_mode,
+.add_asset_mode,
+.select_mode
+    p
+      color: $link-hover
+    svg
+      path
+        fill: $link-hover !important
+.assets
+  &__filtersPanel
+    border-bottom: 1px solid $neutral-20
+    padding: 16px 32px
+    height: 70px
+    box-sizing: border-box
+    background: white
+    width: 100%
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &__actions, &__actionsWhenSelected
+      display: flex
+      grid-column-gap: 24px
+      align-items: center
+    &__actionDisabled
+      pointer-events: none
+      p
+        color: $neutral-40 !important
+      svg
+        path
+          fill: $neutral-40 !important
+    &__action
+      display: flex
+      cursor: pointer
+      grid-column-gap: 4px
+      align-items: center
+      &:hover
+        p
+          color: $link-hover
+        svg
+          path
+            fill: $link-hover !important
+      p
+        font-size: 14px

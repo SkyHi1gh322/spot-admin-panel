@@ -1,123 +1,36 @@
 import * as React from 'react';
-import {FC, useState} from "react";
-import {ReactComponent as PlusIcon} from '../../static/svg/plus.svg';
-import {ReactComponent as SelectIcon} from '../../static/svg/folder-tree.svg';
+import {FC} from "react";
+import {Navigate, NavLink, Outlet} from "react-router-dom";
+import {ListRoutes} from "../../routes/routes";
 import styles from './AssetsStyles.module.sass';
-import {Tag} from "../../components/utils/tag/Tag";
-import {Asset} from "../../components/Asset/Asset";
-import {useCustomSelector} from "../../redux/store";
-import {createAssetDrawerCall} from "./root";
-import {AssetCreator} from "../../components/AssetCreator/AssetCreator";
-import {Button} from "../../components/utils/button/Button";
-import {useDispatch} from "react-redux";
-import {deleteAssetsReducer} from "../../redux/assets/assetsSlice";
-import {Input} from "../../components/utils/input/Input";
-
+import {ReactComponent as ListIcon} from '../../static/svg/rectangle-list.svg';
+import {ReactComponent as DashboardIcon} from '../../static/svg/chart-histogram.svg';
+import {useLocation} from "react-router";
+import {TraderInfo} from "../../components/TraderInfo/TraderInfo";
 export const Assets: FC = () => {
-    const dispatch = useDispatch();
-    const [selectMode, setSelectMode] = useState(false);
-    const [assetsToRemove, setAssetsToRemove] = useState<string[]>([])
-    const assets = useCustomSelector('assets');
+    const location = useLocation();
 
-    createAssetDrawerCall.useIt();
-
-    const onDeselectAll = () => {
-        setAssetsToRemove([]);
-        setSelectMode(false);
-    }
-
-    const onDeleteAssets = () => {
-        dispatch(deleteAssetsReducer(assetsToRemove));
-    }
+    const isDefaultPage = ListRoutes.ASSETS.pageName === location.pathname
 
     return (
         <div className={styles.assets}>
-            <div className={styles.assets__info}>
-                <div className={styles.assets__info__detail}>
-                    <h3 className={styles.assets__info__detail__title}>Информация о аккаунте</h3>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                           Имя пользователя:
-                        </p>
-                        <p className={styles.assets__info__detail__item__value}>Илья Торманов</p>
-                    </div>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                            Баланс:
-                        </p>
-                        <p className={styles.assets__info__detail__item__value}> 20 (SOL)</p>
-                    </div>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                            Дата создания профиля:
-                        </p>
-                        <p className={styles.assets__info__detail__item__value}>18.02.2024</p>
-                    </div>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                            Тэги:
-                        </p>
-                        <div className={styles.assets__info__detail__item__value}>
-                            <Tag text={'Активный трейдер'}/>
-                            <Tag text={'Спекулянт'}/>
-                            <Tag text={'Рык бынка'}/>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.assets__info__detail}>
-                    <h3 className={styles.assets__info__detail__title}>Активности</h3>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                            Топ любимых токенов:
-                        </p>
-                        <p className={styles.assets__info__detail__item__value}>MEME, PEPE, SOL</p>
-                    </div>
-                    <div className={styles.assets__info__detail__item}>
-                        <p className={styles.assets__info__detail__item__label}>
-                            Наиболее активный период:
-                        </p>
-                        <p className={styles.assets__info__detail__item__value}>
-                            19.03.2024 - 28.03.2024
-                        </p>
-                    </div>
-                </div>
-                <div className={styles.assets__info__detail}>
-                    <h3 className={styles.assets__info__detail__title}>Cоц сети и проекты</h3>
-                    <a href={'/'}>Twitch</a>
-                    <a href={'/'}>Trader.org</a>
-                    <a href={'/'}>Linkedin</a>
-                </div>
+            <div className={styles.assets__tabs}>
+                <NavLink to={ListRoutes.ASSETS.LIST.pageName()}
+                         className={({isActive}) => `${styles.assets__tabs__route} ${(isActive || isDefaultPage) && styles.assets__tabs__routeActive}`}>
+                    <ListIcon/>
+                    <p>Assets list</p>
+                </NavLink>
+                <NavLink to={ListRoutes.ASSETS.DASHBOARD.pageName}
+                         className={({isActive}) => `${styles.assets__tabs__route} ${isActive && styles.assets__tabs__routeActive}`}
+                >
+                    <DashboardIcon/>
+                    <p>
+                        Dashboard
+                    </p>
+                </NavLink>
             </div>
-            <div className={styles.assets__filtersPanel}>
-               <div className={styles.assets__filtersPanel__actions}>
-                   <div className={styles.assets__filtersPanel__action} onClick={() => createAssetDrawerCall.showImmediately({title: 'Create new asset'})}>
-                       <PlusIcon/>
-                       <p>Добавить ассет</p>
-                   </div>
-                   <div className={styles.assets__filtersPanel__action} onClick={() => setSelectMode(true)}>
-                       <SelectIcon/>
-                       <p>Выбрать ассеты</p>
-                   </div>
-               </div>
-                {selectMode && <div className={styles.assets__filtersPanel__actionsWhenSelected}>
-                    <Button variant={'secondary'} color={'red'} onClick={onDeleteAssets}>
-                        Удалить ассеты
-                    </Button>
-                    <Button variant={'secondary'} color={'main'} onClick={onDeselectAll}>
-                        Отменить
-                    </Button>
-                </div>}
-            </div>
-            {assets.list.length ?
-                <div className={styles.assets__list}>
-                    {assets.list.map(asset => <Asset {...asset}
-                                                setAssetsToRemove={setAssetsToRemove}
-                                                isMarked={assetsToRemove.includes(asset.name)}
-                                                isSelectMode={selectMode}
-                                                key={asset.name}/>)}
-                </div>
-                : null
-            }
+            <TraderInfo/>
+            <Outlet/>
         </div>
     )
 }

@@ -1,67 +1,33 @@
 @import '../../variables'
 
 .assets
-  &__list
+  &__tabs
     display: flex
-    flex-direction: column
-  &__info
-    padding: 40px 20px
-    box-sizing: border-box
-    background: white
-    display: flex
-    grid-column-gap: 20px
+    align-items: center
+    grid-column-gap: 32px
     border-bottom: 1px solid $neutral-20
-    :last-child
-      border-right: none !important
-    &__detail
-      padding: 0 10px
-      padding-right: 20px
-      border-right: 1px solid $neutral-20
-      grid-row-gap: 12px
-      display: flex
-      flex-direction: column
-      a
-        color: $link
-        &:hover
-          color: $link-hover !important
-      &__title
-      &__item
-        display: flex
-        align-items: center
-        div
-          display: flex
-          align-items: center
-          grid-column-gap: 4px
-        &__label
-          color: $neutral-50
-        &__value
-          margin-left: 4px
-          color: $neutral-70
-  &__balance
-    display: flex
-    align-items: center
-    justify-content: center
-    margin: 20px 0
-    height: 140px
-    width: 350px
-  &__filtersPanel
-    border-bottom: 1px solid $neutral-30
     padding: 16px 32px
-    height: 70px
-    box-sizing: border-box
-    background: white
-    width: 100%
-    display: flex
-    justify-content: space-between
-    align-items: center
-    &__actions, &__actionsWhenSelected
+    a
       display: flex
-      grid-column-gap: 24px
       align-items: center
-    &__action
-      display: flex
-      cursor: pointer
       grid-column-gap: 4px
-      align-items: center
       p
         font-size: 16px
+    &__routeActive
+      position: relative
+      &:after
+        content: ' '
+        position: absolute
+        bottom: -16px
+        width: -webkit-fill-available
+        height: 2px
+        background: $link-hover !important
+      p
+        color: $link-hover !important
+      svg
+        path
+          fill: $link-hover !important
+
+    &__route
+
+

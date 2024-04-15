@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {CSSProperties, FC} from "react";
-import {AssetI} from "../../pages/Assets/types";
+import {FC} from "react";
+import {AssetI, AssetModeEnum} from "../../pages/Assets/types";
 import styles from './AssetStyles.module.sass';
 import {Tag} from "../utils/tag/Tag";
 import TestLogo from "../../static/solana.jpg";
@@ -17,6 +17,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import faker from 'faker';
+import {useSelector} from "../../redux/store";
 
 ChartJS.register(
     CategoryScale,
@@ -27,13 +28,12 @@ ChartJS.register(
 
 
 interface Props extends AssetI{
-    isSelectMode: boolean,
     setAssetsToRemove: React.Dispatch<React.SetStateAction<string[]>>,
     isMarked: boolean
 }
 
 export const Asset: FC<Props> = (props) => {
-
+    const assetsActions = useSelector(state => state.assetsActions)
     const options = {
         responsive: true,
         scales: {
@@ -75,7 +75,7 @@ export const Asset: FC<Props> = (props) => {
     };
 
     const onMarkAsset = () => {
-        if(props.isSelectMode){
+        if(assetsActions.currentAction === AssetModeEnum.SELECT_MODE){
             if(props.isMarked){
                 props.setAssetsToRemove((prev) => prev.filter(i => i !== props.name))
             }
