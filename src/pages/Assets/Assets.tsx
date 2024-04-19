@@ -14,6 +14,7 @@ export const Assets: FC = () => {
 
     return (
         <div className={styles.assets}>
+            <TraderInfo/>
             <div className={styles.assets__tabs}>
                 <NavLink to={ListRoutes.ASSETS.LIST.pageName()}
                          className={({isActive}) => `${styles.assets__tabs__route} ${(isActive || isDefaultPage) && styles.assets__tabs__routeActive}`}>
@@ -29,7 +30,6 @@ export const Assets: FC = () => {
                     </p>
                 </NavLink>
             </div>
-            <TraderInfo/>
             <Outlet/>
         </div>
     )

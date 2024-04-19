@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import './root.sass';
 import {store} from "./redux/store";
 import {Provider} from "react-redux";
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

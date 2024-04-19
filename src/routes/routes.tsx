@@ -4,6 +4,7 @@ import {AssetsList} from "../pages/Assets/AssetsList";
 import {FavouriteTraders} from "../pages/FavouriteTraders";
 import {Assets} from "../pages/Assets/Assets";
 import {Dashboard} from "../pages/Dashboard/Dashboard";
+import {News} from "../pages/News/News";
 
 export const ListRoutes = {
 
@@ -25,11 +26,16 @@ export const ListRoutes = {
         }
     },
     FAVOURITE_TRADERS: {
-        type: RoutesI.RouteType.PUBLIC,
+        type: RoutesI.RouteType.PRIVATE,
         PAGE: {
             pageName: () => 'favouriteTraders',
             component: <FavouriteTraders/>
         }
+    },
+    NEWS:{
+        type: RoutesI.RouteType.PUBLIC,
+        pageName: '/news',
+        component: <News/>
     },
     AUTH: {
         type: RoutesI.RouteType.PUBLIC,

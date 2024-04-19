@@ -19,15 +19,13 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
     const {fields, onChange, onSubmit, isValidForm, getBaseDto, onRefreshForm} = useValidate(CreateAssetSchema);
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit(() => {
-            if(isValidForm){
-                console.log(fields)
-                // console.log(fields)
-                // dispatch(addAssetReducer(getBaseDto()));
-                // onRefreshForm();
-                // dispatch(setDefaultAction());
-                // props.onClose();
-            }
+        onSubmit().then(() => {
+            dispatch(addAssetReducer(getBaseDto()));
+            onRefreshForm();
+            dispatch(setDefaultAction());
+            props.onClose();
+        }).catch(data => {
+            console.log(data)
         })
     }
     return (
@@ -71,7 +69,7 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
                                    }}
                            />
                        </FormItem>
-                       <FormItem label={'Ассоциативные тэги'} isRequired errors={fields.tags.errors}>
+                       <FormItem label={'Ассоциативные тэги'} errors={fields.tags.errors}>
                            <Select list={tagList}
                                    className={styles.assetCreator__block__field}
                                    value={fields.tags.value}

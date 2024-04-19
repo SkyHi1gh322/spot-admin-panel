@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FC} from "react";
-import {Sidebar} from "../components/sidebar/Sidebar";
+import {Sidebar} from "../components/Sidebar/Sidebar";
 import {Route, Routes} from "react-router-dom";
 import {ListRoutes} from "../routes/routes";
 import styles from './ProtectedStyles.module.sass';
@@ -16,6 +16,7 @@ export const ProtectedPage: FC = () => {
                         <Route path={ListRoutes.ASSETS.DASHBOARD.pageName} element={ListRoutes.ASSETS.DASHBOARD.component}/>
                     </Route>
                     <Route path={ListRoutes.FAVOURITE_TRADERS.PAGE.pageName()} element={ListRoutes.FAVOURITE_TRADERS.PAGE.component}/>
+                    <Route path={ListRoutes.NEWS.pageName} element={ListRoutes.NEWS.component}/>
                     <Route path="/"/> {/* 👈 Renders at /app/ */}
                 </Routes>
             </div>

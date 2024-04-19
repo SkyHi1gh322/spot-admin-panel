@@ -13,7 +13,7 @@ import {
     LinearScale,
     PointElement,
     LineElement,
-    ChartData,
+    ChartData, Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import faker from 'faker';
@@ -24,6 +24,7 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
+    Filler,
 );
 
 
@@ -86,43 +87,48 @@ export const Asset: FC<Props> = (props) => {
     }
 
     return (
-        <div className={`${styles.asset} ${props.isMarked && styles.assetToRemove}`} onClick={onMarkAsset}>
-           <div className={styles.asset_content}>
-               <div className={styles.asset_content__coin}>
+        <tr className={`${styles.asset} ${props.isMarked && styles.assetToRemove}`} onClick={onMarkAsset}>
+            <td>
+               <div className={styles.asset__name}>
                    <img src={TestLogo}/>
-                   <div>
-                       <h2>
-                           {props.name}
-                       </h2>
-                       <p>
-                           (SOL)
-                       </p>
-                   </div>
-               </div>
-               <div className={styles.asset_content__finances}>
+                   <h2>
+                       {props.name}
+                   </h2>
                    <p>
-                       {props.usdAmount} USD ( {props.assetAmount} {props.name} )
+                       (SOL)
                    </p>
                </div>
-               <div className={styles.asset_content__profit}>
-                   <p className={styles.asset_content__profit__title}>
-                       Current profit:
-                   </p>
-                   <p className={styles.asset_content__profit__valueRed}>-15 USD</p>
-               </div>
-               <Line className={styles.asset_content__canvas} data={data} options={options}/>
-               <h3 className={styles.asset_content__exchange}>
-                   <img src={TestExchangeLogo}/>
-                   {props.exchange}
-               </h3>
-               <div className={styles.asset_content__tags}>
-                   {props.tags?.map(i => <Tag key={i} text={i}/>)}
-               </div>
-           </div>
-            <div className={styles.actions}>
-                <EditIcon className={styles.actions__edit}/>
-                <TrashIcon className={styles.actions__delete}/>
-            </div>
-        </div>
+            </td>
+            <td>
+                <p>
+                    {props.usdAmount} USD ( {props.assetAmount} {props.name} )
+                </p>
+            </td>
+            <td>
+                <div className={styles.asset__profit}>
+                    <p className={styles.asset__profit__valueRed}>-15 USD (-2%)</p>
+                </div>
+            </td>
+            <td>
+                <Line className={styles.asset__canvas} data={data} options={options}/>
+            </td>
+            <td>
+                <h3 className={styles.asset__exchange}>
+                    <img src={TestExchangeLogo}/>
+                    {props.exchange}
+                </h3>
+            </td>
+            <td>
+                <div className={styles.asset__tags}>
+                    {props.tags?.map(i => <Tag key={i} text={i}/>)}
+                </div>
+            </td>
+            <td>
+                <div className={styles.actions}>
+                    <EditIcon className={styles.actions__edit}/>
+                    <TrashIcon className={styles.actions__delete}/>
+                </div>
+            </td>
+        </tr>
     )
 }

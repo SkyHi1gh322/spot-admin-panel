@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useMemo, useState} from "react";
 import {useSetState} from "react-use";
 
 export type ValidationSchema<T> = {
@@ -83,7 +83,9 @@ export function useValidate<T>(config: ValidationSchema<T>){
     };
 
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>, callback: (fields: SelectorResult<T>) => void) => {
+    const  onSubmit = async (): Promise<{isValid: boolean, state: SelectorResult<T>}> => {
+        // @ts-ignore
+        const res: SelectorResult<T> = {}
         if (config.validateOn === 'submit') {
             for (let key in state) {
                 const originalSelectorFromConfig = config.fields[key];
@@ -97,6 +99,11 @@ export function useValidate<T>(config: ValidationSchema<T>){
                             errors.push(r.errorText);
                         }
                     })
+                    res[key] = {
+                        value: state[key].value,
+                        errors: errors,
+                        hasErrors: errors.length > 0
+                    }
                     setState({
                         [key]: {
                             value: state[key].value,
@@ -107,12 +114,23 @@ export function useValidate<T>(config: ValidationSchema<T>){
                 }
             }
         }
-        callback(state);
+        const actualState = config.validateOn === 'submit' ? res : state;
+
+        return new Promise((res, rej) => {
+            if(isValidForm(actualState)){
+                res({state: actualState, isValid: true})
+            }
+            else{
+                rej('error');
+            }
+        })
+
     }
 
-    const isValidForm = () => {
-        for( let key in state){
-            if(state[key].errors.length){
+    const isValidForm = (arg?: SelectorResult<T>) => {
+        const param = arg ?? state
+        for( let key in param){
+            if(param[key].errors.length){
                 return false
             }
         }

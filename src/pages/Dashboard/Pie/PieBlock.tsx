@@ -3,12 +3,12 @@ import {FC, useMemo, useState} from "react";
 import {Group} from "@visx/group";
 import Pie from "@visx/shape/lib/shapes/Pie";
 import {AnimatedPie} from "./AnimatedPie";
-import {AssetI} from "../Assets/types";
+import {AssetI} from "../../Assets/types";
 import {LegendOrdinal} from "@visx/legend";
 import styles from './PieBlockStyles.module.sass';
-import {useSelector} from "../../redux/store";
+import {useSelector} from "../../../redux/store";
 import {scaleOrdinal} from "@visx/scale";
-import {getRandomColorFromList} from "../../functions";
+import {getRandomColorFromList} from "../../../functions";
 export const PieBlock: FC = () => {
     const assets = useSelector((state) => state.assets.list);
     const [selectedAsset, setSelectedAsset] = useState<AssetI | undefined>(undefined);
@@ -16,7 +16,7 @@ export const PieBlock: FC = () => {
     const getArcColors = useMemo(() => {
         return scaleOrdinal({
             domain: assets.map(i => i.name),
-            range: assets.map(asset => getRandomColorFromList())
+            range: assets.map(() => getRandomColorFromList())
         });
     }, [assets])
 
@@ -83,7 +83,7 @@ export const PieBlock: FC = () => {
                     >
                         {labels =>
                             <div className={styles.legendList}>{labels.map(i => <div className={styles.legendItem}>
-                                <div style={{background: i.value, width: '20px', height: '20px'}}></div>
+                                <div className={styles.legendItem__color} style={{background: i.value}}></div>
                                 <div>{i.datum}</div>
                                 <p>10%</p>
                             </div>)}</div>

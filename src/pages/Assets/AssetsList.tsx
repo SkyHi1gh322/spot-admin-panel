@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import styles from './AssetsListStyles.module.sass';
 import {Asset} from "../../components/Asset/Asset";
 import {useSelector} from "../../redux/store";
@@ -13,18 +13,45 @@ export const AssetsList: FC = () => {
     const assets = useSelector(state => state.assets);
     const assetsActions = useSelector(state => state.assetsActions)
     createAssetDrawerCall.useIt();
-
-
+ 
     return (
         <div className={styles.assets}>
             <AssetsActions assetsToRemove={assetsToRemove} setAssetsToRemove={setAssetsToRemove}/>
             {assetsActions.currentAction === AssetModeEnum.FILTERS_MODE && <AssetsFiltersPanel/>}
             {assets.list.length ?
-                <div className={styles.assets__list}>
-                    {assets.list.map(asset => <Asset {...asset}
-                          setAssetsToRemove={setAssetsToRemove}
-                          isMarked={assetsToRemove.includes(asset.name)}
-                          key={asset.name}/>)}
+                <div>
+                    <table className={styles.assets__list}>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Token
+                                </th>
+                                <th>
+                                    Usd amount
+                                </th>
+                                <th>
+                                    All time profit
+                                </th>
+                                <th>
+                                    24h change
+                                </th>
+                                <th>
+                                    Exchange provider
+                                </th>
+                                <th>
+                                    Tags
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {assets.list.map(asset =>
+                            <Asset {...asset}
+                                   setAssetsToRemove={setAssetsToRemove}
+                                   isMarked={assetsToRemove.includes(asset.name)}
+                                   key={asset.name}/>
+                        )}
+                        </tbody>
+                    </table>
                 </div>
                 : <EmptyState
                     styles={{marginTop: '140px'}}

@@ -17,8 +17,8 @@ export const Sidebar: FC = () => {
                 <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.ASSETS.pageName}>
                     <AssetIcon/>
                     <p>Assets</p>
-                </NavLink >
-                <NavLink  className={styles.sidebar__link} to={ListRoutes.FAVOURITE_TRADERS.PAGE.pageName()}>
+                </NavLink>
+                <NavLink  className={styles.sidebar__link} to={ListRoutes.NEWS.pageName}>
                     <NewsIcon/>
                     <p>News</p>
                 </NavLink >

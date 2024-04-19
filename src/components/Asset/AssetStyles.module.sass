@@ -4,16 +4,53 @@
   border-left: 2px solid $link !important
 
 .asset
-  display: flex
-  justify-content: space-between
-  align-items: center
   box-sizing: border-box
-  height: 80px
   background: white
-  border-radius: 4px
-  padding: 8px 16px
-  border: 2px solid transparent
-  border-bottom: 1px solid $neutral-30
+  border-bottom: 1px solid $neutral-20
+  &__name
+    display: flex
+    align-items: center
+    grid-column-gap: 4px
+    p
+      color: $neutral-50
+  td
+    vertical-align: middle
+    text-align: left
+    padding: 0 32px
+  &__profit
+    display: flex
+    grid-column-gap: 4px
+    align-items: center
+  &__title
+  &__valueRed
+      color: $error-20
+  &__canvas
+      margin-top: 20px
+      height: 40px !important
+      width: 100px !important
+  &__coin
+      width: 150px
+      display: flex
+      align-items: center
+      div
+        display: flex
+        align-items: center
+        grid-column-gap: 4px
+        p
+          margin-top: 2px
+  &__exchange
+      display: flex
+      align-items: center
+  &__finances
+      display: flex
+      flex-direction: column
+      grid-row-gap: 6px
+  img
+      width: 42px
+      height: 32px
+  &__tags
+      display: flex
+      grid-column-gap: 4px
   .actions
     display: flex
     align-items: center
@@ -34,36 +71,3 @@
     height: 80px
     box-sizing: border-box
     align-items: center
-    &__profit
-      display: flex
-      grid-column-gap: 4px
-      align-items: center
-      &__title
-      &__valueRed
-        color: $error-20
-    &__canvas
-      margin-top: 20px
-      height: 80px !important
-      width: 160px !important
-    &__coin
-      display: flex
-      align-items: center
-      div
-        display: flex
-        align-items: center
-        grid-column-gap: 4px
-        p
-          margin-top: 2px
-    &__exchange
-      display: flex
-      align-items: center
-    &__finances
-      display: flex
-      flex-direction: column
-      grid-row-gap: 6px
-    img
-      width: 42px
-      height: 32px
-    &__tags
-      display: flex
-      grid-column-gap: 4px

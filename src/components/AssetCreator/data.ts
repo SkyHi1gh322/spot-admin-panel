@@ -22,7 +22,7 @@ export const CreateAssetSchema: ValidationSchema<AssetI> = {
             rules: [
                 (data) => {
                     return {
-                        isValid: !!data && data.length > 3,
+                        isValid: !!data && data.length > 2,
                         errorText: 'Минимум 3 символа'
                     }
                 }
@@ -56,14 +56,7 @@ export const CreateAssetSchema: ValidationSchema<AssetI> = {
         },
         tags:  {
             initialValue: [],
-            rules: [
-                (data) => {
-                    return {
-                        isValid: !!data && data.length >= 2,
-                        errorText: 'Минимум 2 тэга'
-                    }
-                }
-            ]
+            rules: []
         },
     }
 }
