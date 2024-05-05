@@ -1,11 +1,6 @@
 import {AssetModeEnum} from "../../pages/Assets/types";
 import {createSlice} from "@reduxjs/toolkit";
 
-
-type State = {
-    currentAction: AssetModeEnum
-}
-
 const initialState = {
     currentAction: AssetModeEnum.NONE
 }

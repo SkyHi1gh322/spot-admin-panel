@@ -1,5 +1,4 @@
 import {RoutesI} from "./types";
-import RouteType = RoutesI.RouteType;
 import {AssetsList} from "../pages/Assets/AssetsList";
 import {FavouriteTraders} from "../pages/FavouriteTraders";
 import {Assets} from "../pages/Assets/Assets";
