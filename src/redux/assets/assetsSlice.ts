@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {AssetI} from "../../pages/Assets/types";
-import {Reducer} from "../types";
 
 type State = {
     list: AssetI[]
