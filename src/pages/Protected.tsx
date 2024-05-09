@@ -17,6 +17,7 @@ export const ProtectedPage: FC = () => {
                     </Route>
                     <Route path={ListRoutes.FAVOURITE_TRADERS.PAGE.pageName()} element={ListRoutes.FAVOURITE_TRADERS.PAGE.component}/>
                     <Route path={ListRoutes.NEWS.pageName} element={ListRoutes.NEWS.component}/>
+                    <Route path={ListRoutes.SETTINGS.pageName} element={ListRoutes.SETTINGS.component}/>
                     <Route path="/"/> {/* 👈 Renders at /app/ */}
                 </Routes>
             </div>

@@ -5,7 +5,8 @@ import {FC} from "react";
 import styles from './SidebarStyles.module.sass';
 import {ReactComponent as AssetIcon} from '../../static/svg/briefcase.svg';
 import {ReactComponent as NewsIcon} from '../../static/svg/newspaper-open.svg';
-import {ReactComponent as CheckListIcon} from '../../static/svg/budget-alt.svg'
+import {ReactComponent as CheckListIcon} from '../../static/svg/budget-alt.svg';
+import {ReactComponent as SettingsIcon} from '../../static/svg/settings.svg';
 import {Avatar} from "../utils/avatar/Avatar";
 export const Sidebar: FC = () => {
     return(
@@ -18,11 +19,11 @@ export const Sidebar: FC = () => {
                     <AssetIcon/>
                     <p>Assets</p>
                 </NavLink>
-                <NavLink  className={styles.sidebar__link} to={ListRoutes.NEWS.pageName}>
+                <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.NEWS.pageName}>
                     <NewsIcon/>
                     <p>News</p>
                 </NavLink >
-                <NavLink  className={styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
+                <NavLink  className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.ASSETS.ASSET.pageName('25')}>
                     <CheckListIcon/>
                     <p>Check list</p>
                 </NavLink >
@@ -54,6 +55,12 @@ export const Sidebar: FC = () => {
                 <div className={styles.favourites__showAll}>
                     Show all ...
                 </div>
+            </div>
+            <div className={styles.settings}>
+                <NavLink className={({isActive}) => isActive ? styles.sidebar__linkActive : styles.sidebar__link} to={ListRoutes.SETTINGS.pageName}>
+                    <SettingsIcon/>
+                    <p>Settings</p>
+                </NavLink>
             </div>
         </aside>
     )

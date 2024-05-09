@@ -5,6 +5,7 @@ import {FavouriteTraders} from "../pages/FavouriteTraders";
 import {Assets} from "../pages/Assets/Assets";
 import {Dashboard} from "../pages/Dashboard/Dashboard";
 import {News} from "../pages/News/News";
+import {Settings} from "../pages/Settings/Settings";
 
 export const ListRoutes = {
 
@@ -24,6 +25,11 @@ export const ListRoutes = {
             pageName: '/assets/dashboard',
             component: <Dashboard/>
         }
+    },
+    SETTINGS: {
+        type: RoutesI.RouteType.PRIVATE,
+        pageName: '/settings',
+        component: <Settings/>
     },
     FAVOURITE_TRADERS: {
         type: RoutesI.RouteType.PRIVATE,
