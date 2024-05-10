@@ -10,7 +10,7 @@ import {FormItem} from "../utils/formItem/FormItem";
 import {useDispatch} from "react-redux";
 import {addAssetReducer} from "../../redux/assets/assetsSlice";
 import {BaseBuilderCloseFn, BuilderFullProps} from "../../generalTypes";
-import {setDefaultAction} from "../../redux/assets/assetsActions";
+import {setDefaultAction} from "../../redux/assets/assetsActionsSlice";
 
 
 
@@ -83,7 +83,7 @@ export const AssetCreator: FC<BaseBuilderCloseFn> = (props) => {
                            />
                        </FormItem>
                </div>
-               <Button color={'main'} variant={'primary'} className={styles.assetCreator__createBtn} type={'submit'}>
+               <Button color={'main'} variant={'secondary'} className={styles.assetCreator__createBtn} type={'submit'}>
                    Create asset
                </Button>
            </form>

@@ -4,7 +4,7 @@ import {FC} from "react";
 import {BuilderFullProps} from "../../../generalTypes";
 import {AssetCreator} from "../../../components/AssetCreator/AssetCreator";
 import {useDispatch} from "react-redux";
-import {setDefaultAction} from "../../../redux/assets/assetsActions";
+import {setDefaultAction} from "../../../redux/assets/assetsActionsSlice";
 
 export const CreateAssetDrawer: FC<BuilderFullProps> = (props) => {
     const dispatch = useDispatch();

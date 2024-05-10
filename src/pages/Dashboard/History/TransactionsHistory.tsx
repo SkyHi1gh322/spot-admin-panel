@@ -73,7 +73,7 @@ export const TransactionsHistory: FC = () => {
                         <td>
                            <div className={styles.table__coinInfo}>
                                <img src={transaction.coinLogo}/>
-                               <h2>{transaction.coin}</h2>
+                               <h3>{transaction.coin}</h3>
                                <p>({transaction.coinShortName})</p>
                            </div>
                         </td>

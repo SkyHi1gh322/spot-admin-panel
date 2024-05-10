@@ -6,7 +6,7 @@ import {Button} from "../utils/button/Button";
 import {ReactComponent as PlusIcon} from '../../static/svg/plus.svg';
 import {ReactComponent as SelectIcon} from '../../static/svg/folder-tree.svg';
 import {ReactComponent as FiltersIcon} from '../../static/svg/filter.svg';
-import {setCurrentAction, setDefaultAction} from "../../redux/assets/assetsActions";
+import {setCurrentAction, setDefaultAction} from "../../redux/assets/assetsActionsSlice";
 import {deleteAssetsReducer} from "../../redux/assets/assetsSlice";
 import {createAssetDrawerCall} from "../../pages/Assets/root";
 import {useDispatch} from "react-redux";

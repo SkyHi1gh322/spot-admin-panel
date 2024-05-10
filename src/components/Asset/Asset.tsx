@@ -91,9 +91,9 @@ export const Asset: FC<Props> = (props) => {
             <td>
                <div className={styles.asset__name}>
                    <img src={TestLogo}/>
-                   <h2>
+                   <h3>
                        {props.name}
-                   </h2>
+                   </h3>
                    <p>
                        (SOL)
                    </p>

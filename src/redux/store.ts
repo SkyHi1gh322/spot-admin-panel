@@ -1,8 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {thunk} from "redux-thunk";
 import AssetsReducer from './assets/assetsSlice'
-import AssetsActionsReducer from './assets/assetsActions'
-import {RootState} from "./types";
+import AssetsActionsReducer from './assets/assetsActionsSlice'
+import SettingsReducer from './settings/settingsSlice';
+import {RootState} from "./root_types";
 import {
     useSelector as useReduxSelector,
     TypedUseSelectorHook,
@@ -12,7 +13,8 @@ import {
 export const store = configureStore({
     reducer: {
         assets: AssetsReducer,
-        assetsActions: AssetsActionsReducer
+        assetsActions: AssetsActionsReducer,
+        settings: SettingsReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

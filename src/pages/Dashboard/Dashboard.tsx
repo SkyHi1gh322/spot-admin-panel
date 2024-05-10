@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import {useSelector} from "../../redux/store";
 import styles from './DashboardStyles.module.sass';
 import {PieBlock} from "./Pie/PieBlock";
