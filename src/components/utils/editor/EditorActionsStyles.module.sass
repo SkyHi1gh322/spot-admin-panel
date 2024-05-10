@@ -7,5 +7,13 @@
   padding: 16px
   box-sizing: border-box
   border-bottom: 1px solid $neutral-20
+  justify-content: space-between
+  &__left, &__right
+    display: flex
+    align-items: center
+    grid-column-gap: 14px
+  .action_active
+    path
+      fill: $blue-50 !important
   .action
     cursor: pointer

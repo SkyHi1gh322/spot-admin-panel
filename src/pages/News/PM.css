@@ -325,7 +325,7 @@ li.ProseMirror-selectednode:after {
     padding: 4px 8px 4px 14px;
     line-height: 1.2;
     outline: none;
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid #EAEEF2;
     overflow: auto;
     min-height: 500px;
 }

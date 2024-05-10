@@ -3,6 +3,7 @@ import {thunk} from "redux-thunk";
 import AssetsReducer from './assets/assetsSlice'
 import AssetsActionsReducer from './assets/assetsActionsSlice'
 import SettingsReducer from './settings/settingsSlice';
+import NewsReducer from './news/newsSlice';
 import {RootState} from "./root_types";
 import {
     useSelector as useReduxSelector,
@@ -14,7 +15,8 @@ export const store = configureStore({
     reducer: {
         assets: AssetsReducer,
         assetsActions: AssetsActionsReducer,
-        settings: SettingsReducer
+        settings: SettingsReducer,
+        news: NewsReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
