@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {FC} from "react";
-import './PM.css';
-import {Editor} from "../../components/utils/editor/Editor";
+import {Editor} from "../../components/utils/editor/editor";
 
 export const News: FC = () => {
     return (
